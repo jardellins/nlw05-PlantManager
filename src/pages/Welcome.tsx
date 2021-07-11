@@ -1,61 +1,99 @@
 import React from "react";
-import { Text, Image, StyleSheet, SafeAreaView } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+import { Feather } from "@expo/vector-icons";
 
 import waterIngImg from "../assets/watering.png";
-import Button from "../components/Button";
 import colors from "../styles/colors";
+import fonts from "../styles/fonts";
+import { useNavigation } from "@react-navigation/core";
 
 export default function Welcome() {
+  const navigation = useNavigation();
+
+  const handleStart = () => {
+    navigation.navigate("UserIndentification");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.wrapper}>
         <Text style={styles.title}>
-          Gerencie {'\n'}
-          suas plantas {'\n'}
-          de forma fácil
+          Gerencie {"\n"}
+          suas plantas de {"\n"}
+          forma fácil
         </Text>
 
-      <Image source={waterIngImg} style={styles.image} />
+        <Image
+          source={waterIngImg}
+          style={styles.image}
+          resizeMode={`contain`}
+        />
 
-      <Text style={styles.subTitle}>
-        Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você
-        sempre que precisar.
-      </Text>
+        <Text style={styles.subTitle}>
+          Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você
+          sempre que precisar.
+        </Text>
 
-     <Button title={`>`} />
+        <TouchableOpacity
+          style={styles.button}
+          activeOpacity={0.7}
+          onPress={handleStart}
+        >
+          <Feather name="chevron-right" style={styles.buttonIcon} />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-    title: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: colors.heading,
-        marginTop: 38
-    },
-    subTitle: {
-        textAlign: 'center',
-        fontSize: 18,
-        paddingHorizontal: 20,
-        color: colors.heading,
-    },
-    button: {
-        backgroundColor: colors.green,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 16,
-        marginBottom: 10,
-        height: 56,
-        width: 56,
-    },
-    image: {
-        width: 292,
-        height: 284,
-    }
-})
+  container: {
+    flex: 1,
+  },
+  wrapper: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-around",
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: colors.heading,
+    marginTop: 38,
+    fontFamily: fonts.heading,
+    lineHeight: 34,
+  },
+  subTitle: {
+    textAlign: "center",
+    fontSize: 18,
+    paddingHorizontal: 20,
+    color: colors.heading,
+    fontFamily: fonts.text,
+  },
+  button: {
+    backgroundColor: colors.green,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 16,
+    marginBottom: 10,
+    height: 56,
+    width: 56,
+  },
+  image: {
+    height: Dimensions.get(`window`).width * 0.7,
+  },
+  buttonIcon: {
+    fontSize: 32,
+    color: colors.white,
+  },
+});
