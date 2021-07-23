@@ -29,9 +29,9 @@ interface PlantProps {
 }
 
 const PlantSelect = () => {
-  const [enviroments, setEnviroments] = useState<EnviromentProps[]>();
-  const [plants, setPlants] = useState<PlantProps[]>();
-  const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>();
+  const [enviroments, setEnviroments] = useState<EnviromentProps[]>([]);
+  const [plants, setPlants] = useState<PlantProps[]>([]);
+  const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
   const [enviromentSelected, setEnviromentSelected] = useState("all");
   const [loading, setLoading] = useState(true);
 
@@ -82,8 +82,8 @@ const PlantSelect = () => {
     if (!data) return setLoading(true);
 
     if (page > 1) {
-      setPlants((oldValue) => [...oldValue, ...data]);
-      setFilteredPlants((oldValue) => [...oldValue, ...data]);
+      setPlants(oldValue => [...oldValue, ...data]);
+      setFilteredPlants(oldValue => [...oldValue, ...data]);
     } else {
       setPlants(data);
       setFilteredPlants(data);
@@ -145,9 +145,7 @@ const PlantSelect = () => {
           showsVerticalScrollIndicator={false}
           numColumns={2}
           onEndReachedThreshold={0.1}
-          onEndReached={({ distenceFromEnd }) =>
-            handleFetchMore(distenceFromEnd)
-          }
+          onEndReached={({ distanceFromEnd }) => handleFetchMore(distanceFromEnd)}
           ListFooterComponent={
             loadingMore ?
               <ActivityIndicator color={colors.green} />
