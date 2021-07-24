@@ -41,13 +41,22 @@ export default function UserIdentification() {
   };
 
   async function handleSubmit() {
-    if(!userName)
-      return Alert.alert('Informe o seu nome!')
+    if (!userName) return Alert.alert("Informe o seu nome!");
 
-    await AsyncStorage.setItem('@plantmanager:user', userName)
-
-    navigation.navigate("Confirmation");
-  };
+    try {
+      await AsyncStorage.setItem("@plantmanager:user", userName);
+      navigation.navigate("Confirmation", {
+        title: "Prontinho",
+        subtitle:
+          "Agora vamos começar a cuidar das suas plantinhas com muito cuidado.",
+        buttonTitle: "Começar",
+        icon: "smile",
+        nextScreen: "PlantSelect",
+      });
+    } catch {
+      Alert.alert("Não foi possível salvar o seu nome.");
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,9 +64,7 @@ export default function UserIdentification() {
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <TouchableWithoutFeedback
-          onPress={Keyboard.dismiss}
-        >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.content}>
             <View style={styles.form}>
               <View style={styles.header}>

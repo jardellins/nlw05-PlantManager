@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
+import { PlantProps } from "../libs/storage";
 
 import {Header} from "../components/Hearder";
 import EnviromentButton from "../components/EnviromentButton";
@@ -13,19 +14,6 @@ import { useNavigation } from "@react-navigation/core";
 interface EnviromentProps {
   key: string;
   title: string;
-}
-
-interface PlantProps {
-  id: string;
-  name: string;
-  about: string;
-  water_tips: string;
-  photo: string;
-  environments: [string];
-  frequency: {
-    times: number;
-    repeat_every: string;
-  };
 }
 
 const PlantSelect = () => {
