@@ -22,7 +22,7 @@ import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 
 interface Params {
-  plant: PlantProps
+  plant: PlantProps;
 }
 
 export function PlantSave() {
@@ -30,7 +30,7 @@ export function PlantSave() {
   const [showDatePicker, setShowDatePicker] = useState(Platform.OS === "ios");
 
   const route = useRoute();
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const { plant } = route.params as Params;
 
@@ -48,15 +48,15 @@ export function PlantSave() {
   }
 
   function handleOpenDateTimePickerForAndroid() {
-    setShowDatePicker(oldState => !oldState)
+    setShowDatePicker((oldState) => !oldState);
   }
 
   async function handleSave() {
     try {
       await savePlant({
         ...plant,
-        dateTimeNotification: selectedDateTime
-      })
+        dateTimeNotification: selectedDateTime,
+      });
 
       navigation.navigate("Confirmation", {
         title: "Tudo certo",
@@ -66,53 +66,57 @@ export function PlantSave() {
         icon: "hug",
         nextScreen: "MyPlants",
       });
-
-    } catch  {
-      Alert.alert('Não foi possível salvar.')
+    } catch {
+      Alert.alert("Não foi possível salvar.");
     }
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.plantInfo}>
-        <SvgFromUri uri={plant.photo} height={150} width={150} />
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.container}
+    >
+      <View style={styles.container}>
+        <View style={styles.plantInfo}>
+          <SvgFromUri uri={plant.photo} height={150} width={150} />
 
-        <Text style={styles.plantName}>{plant.name}</Text>
-        <Text style={styles.plantAbout}>{plant.about}</Text>
-      </View>
-
-      <View style={styles.controller}>
-        <View style={styles.tipContainer}>
-          <Image source={waterDrop} style={styles.tipImage} />
-
-          <Text style={styles.tipText}>{plant.water_tips}</Text>
+          <Text style={styles.plantName}>{plant.name}</Text>
+          <Text style={styles.plantAbout}>{plant.about}</Text>
         </View>
 
-        <Text style={styles.alertLabel}>
-          Escolha o melhor horário para ser lambrado:
-        </Text>
-        {showDatePicker && (
-          <DateTimePicker
-            value={selectedDateTime}
-            mode="time"
-            display="spinner"
-            onChange={handleChangeTime}
-          />
-        )}
+        <View style={styles.controller}>
+          <View style={styles.tipContainer}>
+            <Image source={waterDrop} style={styles.tipImage} />
 
-        {Platform.OS === 'android' && 
-        <TouchableOpacity
-          onPress={handleOpenDateTimePickerForAndroid}
-          style={styles.dateTimePickerButton}
-        >
-          <Text style={styles.dateTimePickerText} >
-            {`Mudar ${format(selectedDateTime, 'HH:mm')}`}
+            <Text style={styles.tipText}>{plant.water_tips}</Text>
+          </View>
+
+          <Text style={styles.alertLabel}>
+            Escolha o melhor horário para ser lambrado:
           </Text>
-        </TouchableOpacity>
-        }
-        <Button title="Cadastrar planta" onPress={handleSave} />
+          {showDatePicker && (
+            <DateTimePicker
+              value={selectedDateTime}
+              mode="time"
+              display="spinner"
+              onChange={handleChangeTime}
+            />
+          )}
+
+          {Platform.OS === "android" && (
+            <TouchableOpacity
+              onPress={handleOpenDateTimePickerForAndroid}
+              style={styles.dateTimePickerButton}
+            >
+              <Text style={styles.dateTimePickerText}>
+                {`Mudar ${format(selectedDateTime, "HH:mm")}`}
+              </Text>
+            </TouchableOpacity>
+          )}
+          <Button title="Cadastrar planta" onPress={handleSave} />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -179,9 +183,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   dateTimePickerButton: {
-    width: '100%',
-    alignItems: 'center',
-    paddingVertical: 40
+    width: "100%",
+    alignItems: "center",
+    paddingVertical: 40,
   },
   dateTimePickerText: {
     color: colors.heading,
